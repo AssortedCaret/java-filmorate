@@ -1,7 +1,7 @@
 package test;
 
 import model.Film;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.time.LocalDate;

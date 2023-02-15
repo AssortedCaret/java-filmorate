@@ -1,9 +1,9 @@
 package test;
 
-import model.Film;
 import model.User;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+
 import java.time.LocalDate;
 
 public class UserControllerTest {
