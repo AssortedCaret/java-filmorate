@@ -1,7 +1,7 @@
 package test;
 
+import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.model.User;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @SpringBootTest
 public class UserControllerTest {
-    @Test
+@Test
     public void shouldBeFullUser(){
         ArrayList<User> users = new ArrayList<>();
         User user = new User(1,"human@yes.ru", "Huuuman1", "Man", LocalDate.of(1990,01,01));
