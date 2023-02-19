@@ -1,11 +1,10 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import ru.yandex.practicum.filmorate.exception.ValidationException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
-
+import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +30,16 @@ public class FilmController {
         String description = film.getDescription();
         char[] c_arr = description.toCharArray();
         if(c_arr.length > 200){
+            log.debug("Не выполнены условия добавления пользователя. Пользователь не добавлен");
+            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
+                    "правильности ввода данных.");
+        }
+        if(film.getName() == ""){
+            log.debug("Не выполнены условия добавления пользователя. Пользователь не добавлен");
+            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
+                    "правильности ввода данных.");
+        }
+        if(film.getDuration() <= 0){
             log.debug("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");

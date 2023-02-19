@@ -9,6 +9,8 @@ import java.time.LocalDate;
 public class Film {
     private int id;
     @NotEmpty
+    @NotNull
+    @NotBlank
     private String name;
     //@Max(200)
     private String description;
