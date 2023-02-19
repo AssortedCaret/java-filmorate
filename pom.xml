@@ -44,14 +44,7 @@
 			<artifactId>tomcat-embed-core</artifactId>
 			<version>10.1.5</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
