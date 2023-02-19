@@ -1,11 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
-import java.time.Duration;
-import java.time.LocalDate;
-
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import lombok.NonNull;
+
+import java.time.LocalDate;
 
 @Data
 public class Film {
