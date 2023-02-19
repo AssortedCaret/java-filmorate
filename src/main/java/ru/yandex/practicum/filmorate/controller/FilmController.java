@@ -1,11 +1,11 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-
-import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.model.Film;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
