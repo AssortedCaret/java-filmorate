@@ -12,7 +12,6 @@ public class Film {
     @NotNull
     @NotBlank
     private String name;
-    //@Max(200)
     private String description;
     private LocalDate releaseDate;
     @Positive

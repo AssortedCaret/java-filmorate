@@ -2,22 +2,37 @@ package test;
 
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.model.User;
-import org.junit.jupiter.api.Assertions;
-import org.springframework.boot.test.context.SpringBootTest;
-
+import javax.validation.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 public class UserControllerTest {
-@Test
-    public void shouldBeFullUser(){
-        ArrayList<User> users = new ArrayList<>();
-        User user = new User(1,"human@yes.ru", "Huuuman1", "Man", LocalDate.of(1990,01,01));
-        Assertions.assertNotNull(user.getId());
-        Assertions.assertNotNull(user.getName());
-        Assertions.assertEquals(user.getBirthday(), LocalDate.of(1990, 01, 01));
-        Assertions.assertEquals(user.getLogin(), "Huuuman1");
-        Assertions.assertEquals(user.getEmail(), "human@yes.ru");
+    private static Validator validator;
+    static {
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        validator = validatorFactory.usingContext().getValidator();
+    }
+
+    @Test
+    void validateBirthday() {
+        User user = new User(1,"human@yes.ru", "Huuuman1", "Man",
+                LocalDate.of(2220,01,01));
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assertEquals(1, violations.size(), "Add @ in email");
+    }
+
+    @Test
+    void validateEmail() {
+        User user = new User(1,"humanyes.ru", "Huuuman1", "Man", LocalDate.of(1990,01,01));
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assertEquals(1, violations.size(), "Email must contain @");
+    }
+
+    @Test
+    void validateLogin() {
+        User user = new User(1,"human@yes.ru", "", "Man", LocalDate.of(1990,01,01));
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assertEquals(2, violations.size(), "Login must be full");
     }
 }
