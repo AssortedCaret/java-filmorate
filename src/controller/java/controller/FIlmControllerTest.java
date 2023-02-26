@@ -25,7 +25,7 @@ public class FIlmControllerTest {
         Film film = new Film(1,"", "Blue people",
                 LocalDate.of(2020, 01, 01), 220);
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
-        assertEquals(1, violations.size(), "Add @ in email");
+        assertEquals(1, violations.size(), "Add name");
     }
 
     @Test
@@ -33,6 +33,6 @@ public class FIlmControllerTest {
         Film film = new Film(1,"Avatar", "Blue people",
                 LocalDate.of(2020, 01, 01), -220);
         Set<ConstraintViolation<Film>> violations = validator.validate(film);
-        assertEquals(1, violations.size(), "Add @ in email");
+        assertEquals(1, violations.size(), "Duration must be positive");
     }
 }
