@@ -14,8 +14,8 @@ import java.util.HashMap;
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-    private  final HashMap<Integer, User> users = new HashMap<Integer, User>();
-    int id = 1;
+    private  final HashMap<Integer, User> users = new HashMap<>();
+    private int id = 1;
 
     @PostMapping
     public User addUser(@RequestBody @Valid  User user) throws ValidationException {
