@@ -8,12 +8,10 @@ import lombok.Data;
 @Data
 public class User {
     private  int id;
-    @NotNull
-    @Email
-    @NotBlank
+    @NotBlank(message = "Email не должен быть пустым")
     private  String email;
-    @NotBlank
-    @NotEmpty
+    @Pattern(regexp = "\\S*", message = "Логин не должен содержать пробелов")
+    @NotBlank(message = "Login не должен быть пустым")
     private  String login;
     private  String name;
     @Past
