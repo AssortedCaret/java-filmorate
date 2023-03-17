@@ -1,13 +1,15 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.*;
 import lombok.Data;
 
 @Data
 public class User {
-    private  int id;
+    private  Integer id;
     @NotBlank(message = "Email не должен быть пустым")
     @Email
     private  String email;
@@ -17,17 +19,24 @@ public class User {
     private  String name;
     @Past
     private  LocalDate birthday;
+    private Set<Integer> friends = new HashSet<>();
 
-  public User(int id, String email, String login, String name, LocalDate date){
+  public User(Integer id, String email, String login, String name, LocalDate date){
         this.id = id;
         this.email = email;
         this.login = login;
         this.birthday = date;
         this.name = name;
     }
+    public Set<Integer> getFriends() {
+        return friends;
+    }
 
-    private int putIdUser(){
-        id += 1;
-        return id;
+    public void setFriends(Integer user) {
+        friends.add(user);
+    }
+
+    public void deleteFriend(Integer id){
+      friends.remove(id);
     }
 }
