@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class FilmService {
     private final InMemoryFilmStorage inMemoryFilmStorage;
+    Comparator<Film> comparator = new NewComparator();
+    Set<Film> popularFilm = new TreeSet<>(comparator);
     @Autowired
     public FilmService(InMemoryFilmStorage inMemoryFilmStorage) {
         this.inMemoryFilmStorage = inMemoryFilmStorage;
@@ -46,8 +48,7 @@ public class FilmService {
     }
 
     public List<Film> returnPopularFilm( Integer count){
-        Comparator<Film> comparator = new NewComparator();
-        Set<Film> popularFilm = new TreeSet<>(comparator);
+
         popularFilm.addAll(inMemoryFilmStorage.getMap().values());
         if(!(count == null))
             return popularFilm.stream().limit(count).collect(Collectors.toList());
