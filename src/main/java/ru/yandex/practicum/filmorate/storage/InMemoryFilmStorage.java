@@ -19,9 +19,13 @@ public class InMemoryFilmStorage implements FilmStorage{
     private final HashMap<Integer, Film> films = new HashMap<>();
     private Integer id = 1;
     @Override
-    public Film addFilm(@Valid Film film) throws ValidationException {
+    public Film add(@Valid Film film) throws ValidationException, CloneNotSupportedException {
         validateFilm(film);
         putIdFilm(film);
+        if(films.containsKey(film.getId())) {
+            log.error("Данный '{}' уже добавлен", film);
+            throw new CloneNotSupportedException("Данный FilmId уже добавлен");
+        }
         try {
             films.put(film.getId(), film);
             log.info("Добавлен фильм: '{}'", film);
@@ -34,7 +38,7 @@ public class InMemoryFilmStorage implements FilmStorage{
     }
 
     @Override
-    public Film updateFIlm(@Valid Film film) throws ValidationException{
+    public Film update(@Valid Film film) throws ValidationException{
         validateFilm(film);
         if(film.getId() > films.size()){
             log.error("Не выполнены условия обновления фильма. Фильм не обновлен");
@@ -47,19 +51,28 @@ public class InMemoryFilmStorage implements FilmStorage{
     }
 
     @Override
-    public ArrayList<Film> getFilms() {
+    public Film delete(Integer id){
+        Film film = films.get(id);
+        films.remove(film);
+        return film;
+    }
+
+    @Override
+    public ArrayList<Film> getAll() {
         log.info("Выведен список films");
         return new ArrayList<>(films.values());
     }
 
-    public Film getFilm(Integer id){
-        ArrayList<Film> film = getFilms();
-        if(film.size() < id){
+    @Override
+    public Film get(Integer id){
+        if(films.size() < id){
             throw new NotFoundException("Такого id не существует");
         }
-        return film.get(Math.toIntExact(id - 1));
+        return films.get(id);
     }
-    public HashMap getMap(){
+
+    @Override
+    public HashMap<Integer, Film> getMap(){
         return films;
     }
 

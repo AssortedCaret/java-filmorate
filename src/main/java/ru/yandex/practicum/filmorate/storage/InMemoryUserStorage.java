@@ -19,9 +19,11 @@ public class InMemoryUserStorage implements UserStorage{
     private int id = 1;
 
     @Override
-    public User addUser(User user) throws ValidationException {
+    public User add(User user) throws ValidationException, CloneNotSupportedException {
         validateUser(user);
         putIdUser(user);
+        if(users.containsKey(user.getId()))
+            throw new CloneNotSupportedException("Данный UserId уже добавлен");
         try {
             users.put(user.getId(), user);
             log.info("Добавлен user: '{}'", user);
@@ -34,7 +36,7 @@ public class InMemoryUserStorage implements UserStorage{
     }
 
     @Override
-    public User updateUser(User user) throws ValidationException, NotFoundException {
+    public User update(User user) throws ValidationException, NotFoundException {
         validateUser(user);
         if(user.getId() > users.size()){
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
@@ -46,7 +48,20 @@ public class InMemoryUserStorage implements UserStorage{
     }
 
     @Override
-    public ArrayList<User> getUsers() {
+    public User delete(Integer id){
+        User user = users.get(id);
+        users.remove(user);
+        return user;
+    }
+
+    @Override
+    public User get(Integer id){
+        User user = users.get(id);
+        return user;
+    }
+
+    @Override
+    public ArrayList<User> getAll() {
         log.info("Выведен список users");
         return new ArrayList<>(users.values());
     }

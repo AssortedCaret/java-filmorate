@@ -1,12 +1,12 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.yandex.practicum.filmorate.exception.ErrorResponse;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/films")
 @Slf4j
 public class FilmController {
-    private final InMemoryFilmStorage inMemoryFilmStorage;
+    private final FilmStorage inMemoryFilmStorage;
     private final FilmService filmService;
     @Autowired
     public FilmController(InMemoryFilmStorage inMemoryFilmStorage, FilmService filmService){
@@ -31,17 +31,17 @@ public class FilmController {
 
     @GetMapping(value = "/{id}")
     public Film getFilmById(@PathVariable("id") Integer id) {
-        return inMemoryFilmStorage.getFilm(id);
+        return inMemoryFilmStorage.get(id);
     }
 
     @GetMapping
     public ArrayList<Film> getFilms(){
-        return inMemoryFilmStorage.getFilms();
+        return inMemoryFilmStorage.getAll();
     }
 
     @PostMapping
-    public Film addFilm(@RequestBody Film film) throws ValidationException {
-        return inMemoryFilmStorage.addFilm(film);
+    public Film addFilm(@RequestBody Film film) throws ValidationException, CloneNotSupportedException {
+        return inMemoryFilmStorage.add(film);
     }
 
     @PutMapping(value = "/{id}/like/{userId}")
@@ -52,7 +52,12 @@ public class FilmController {
 
     @PutMapping
     public Film updateFIlm(@RequestBody Film film) throws ValidationException {
-        return inMemoryFilmStorage.updateFIlm(film);
+        return inMemoryFilmStorage.update(film);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public Film deleteFilmById(@PathVariable("id") Integer id) {
+        return inMemoryFilmStorage.delete(id);
     }
 
     @DeleteMapping(value = "/{id}/like/{userId}")

@@ -7,6 +7,7 @@ import ru.yandex.practicum.filmorate.comparator.NewComparator;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class FilmService {
-    private final InMemoryFilmStorage inMemoryFilmStorage;
+    private final FilmStorage inMemoryFilmStorage;
     Comparator<Film> comparator = new NewComparator();
     Set<Film> popularFilm = new TreeSet<>(comparator);
     @Autowired
@@ -28,7 +29,6 @@ public class FilmService {
         films = inMemoryFilmStorage.getMap();
         Film film = films.get(filmId);
         film.setLikes(userId);
-        inMemoryFilmStorage.updateFIlm(film);
         log.info("Метод отработал положительно в FilmService, addLike()");
         return film;
     }
@@ -42,7 +42,7 @@ public class FilmService {
         }
         Film film = films.get(filmId);
         film.deleteLike(userId);
-        inMemoryFilmStorage.updateFIlm(film);
+        inMemoryFilmStorage.update(film);
         log.info("Метод отработал положительно в FilmService, deleteLike()");
         return film;
     }

@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import ru.yandex.practicum.filmorate.exception.ErrorResponse;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-    private final InMemoryUserStorage inMemoryUserStorage;
+    private final UserStorage inMemoryUserStorage;
     private final UserService userService;
 
     @Autowired
@@ -27,12 +29,12 @@ public class UserController {
 
     @GetMapping
     public ArrayList<User> getUsers(){
-        return inMemoryUserStorage.getUsers();
+        return inMemoryUserStorage.getAll();
     }
 
     @GetMapping(value = "/{id}/friends")
     public List<User> userFindAllFriends(@PathVariable("id") Integer id) throws NotFoundException {
-        return userService.returnFriend(id);
+        return userService.returnsFriend(id);
     }
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
@@ -47,13 +49,13 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user) throws ValidationException {
-        return inMemoryUserStorage.addUser(user);
+    public User addUser(@RequestBody User user) throws ValidationException, CloneNotSupportedException {
+        return inMemoryUserStorage.add(user);
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user) throws ValidationException, NotFoundException {
-        return inMemoryUserStorage.updateUser(user);
+    public User updateUser(@RequestBody User user) throws ValidationException, NotFoundException, ErrorResponse {
+        return inMemoryUserStorage.update(user);
     }
 
     @PutMapping(value = "/{id}/friends/{friendId}")
@@ -61,6 +63,11 @@ public class UserController {
             throws NotFoundException {
         log.info("Метод отработал положительно в UserController, addFriend()");
         return userService.addFriend(id, friendId);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public User deleteFilmById(@PathVariable("id") Integer id) {
+        return inMemoryUserStorage.delete(id);
     }
 
     @DeleteMapping(value = "/{id}/friends/{friendId}")
