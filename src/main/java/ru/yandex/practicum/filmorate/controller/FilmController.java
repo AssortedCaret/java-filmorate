@@ -1,83 +1,71 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 @RestController
-@Slf4j
 @RequestMapping("/films")
+@Slf4j
 public class FilmController {
-    private final HashMap<Integer, Film> films = new HashMap<>();
-    private int id = 1;
-
-    @PostMapping
-    public Film addFilm(@RequestBody @Valid Film film) throws ValidationException {
-        validateFilm(film);
-        putIdFilm(film);
-        try {
-            films.put(film.getId(), film);
-            log.info("Добавлен фильм: '{}'", film);
-            return film;
-        } catch (Exception e){
-            log.error("Не выполнены условия добавления фильма. Фильм не добавлен");
-            throw new ValidationException("Не выполнены условия добавления фильма. /n Убедитесь в правильности ввода" +
-                    "данных.");
-        }
+    private final FilmStorage inMemoryFilmStorage;
+    private final FilmService filmService;
+    @Autowired
+    public FilmController(InMemoryFilmStorage inMemoryFilmStorage, FilmService filmService){
+        this.inMemoryFilmStorage = inMemoryFilmStorage;
+        this.filmService = filmService;
     }
 
-    @PutMapping
-    public Film updateFIlm(@RequestBody @Valid Film film) throws ValidationException {
-        validateFilm(film);
-        if(film.getId() > films.size()){
-            log.error("Не выполнены условия обновления фильма. Фильм не обновлен");
-            throw new ValidationException("Не выполнены условия обновления фильма. /n Убедитесь в правильности ввода" +
-                    "данных.");
-        }
-        films.put(film.getId(), film);
-        log.info("Обновлен film '{}' на '{}'", film.getId(), film);
-        return film;
+    @GetMapping(value = "/popular")
+    public List<Film> returnSameFriend(@RequestParam(required = false, defaultValue = "10") Integer count) {
+        return filmService.returnPopularFilm(count);
+    }
+
+    @GetMapping(value = "/{id}")
+    public Film getFilmById(@PathVariable("id") Integer id) {
+        return inMemoryFilmStorage.get(id);
     }
 
     @GetMapping
     public ArrayList<Film> getFilms(){
-        log.info("Выведен список films");
-        return new ArrayList<>(films.values());
+        return inMemoryFilmStorage.getAll();
     }
 
-    private int putIdFilm(Film film){
-        film.setId(id);
-        id = id+1;
-        return id;
+    @PostMapping
+    public Film addFilm(@RequestBody Film film) throws ValidationException, CloneNotSupportedException {
+        return inMemoryFilmStorage.add(film);
     }
 
-    private void validateFilm(@Valid Film film) throws ValidationException {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
-            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
-            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
-                    "правильности ввода данных.");
-        }
-        String description = film.getDescription();
-        char[] c_arr = description.toCharArray();
-        if(c_arr.length > 200){
-            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
-            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
-                    "правильности ввода данных.");
-        }
-        if(film.getName() == ""){
-            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
-            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
-                    "правильности ввода данных.");
-        }
-        if(film.getDuration() <= 0){
-            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
-            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
-                    "правильности ввода данных.");
-        }
+    @PutMapping(value = "/{id}/like/{userId}")
+    public Film filmAddLike(@PathVariable("id") Integer id, @PathVariable("userId")Integer userId)
+            throws ValidationException {
+        return filmService.addLike(id, userId);
     }
+
+    @PutMapping
+    public Film updateFIlm(@RequestBody Film film) throws ValidationException {
+        return inMemoryFilmStorage.update(film);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public Film deleteFilmById(@PathVariable("id") Integer id) {
+        return inMemoryFilmStorage.delete(id);
+    }
+
+    @DeleteMapping(value = "/{id}/like/{userId}")
+    public Film filmDeleteLike(@PathVariable("id") Integer id, @PathVariable("userId")Integer userId)
+            throws ValidationException {
+        return filmService.deleteLike(id, userId);
+    }
+
+
+
 }
