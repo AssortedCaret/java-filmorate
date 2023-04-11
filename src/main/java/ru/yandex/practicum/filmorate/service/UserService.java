@@ -21,46 +21,46 @@ public class UserService {
     public UserService(InMemoryUserStorage inMemoryUserStorage){
         this.inMemoryUserStorage = inMemoryUserStorage;
     }
-    public User addFriend(Integer userId, Integer otherUserId) throws NotFoundException {
-        if(userId < 0 || otherUserId < 0){
-            log.error("Передан отрицательный UserId в UserService, addFriend()");
-            throw new NotFoundException("Отрицательный UserId");
-        }
-        HashMap<Integer, User> users;
-        users = inMemoryUserStorage.getMap();
-        if(users.get(userId) == null) {
-            log.error("Отсутствует указанный UserId в UserService, addFriend()");
-            throw new NotFoundException("Отсутствует указанный UserId");
-        }
-        if(users.get(otherUserId) == null) {
-            log.error("Отсутствует указанный otherUserId в UserService, addFriend()");
-            throw new NotFoundException("Отсутствует указанный otherUserId");
-        }
-        User user = users.get(userId);
-        User userFriend = users.get(otherUserId);
-        user.setFriends(otherUserId);
-        userFriend.setFriends(userId);
-        log.info("Метод отработал положительно в UserService, addFriend()");
-        return user;
-    }
-
-    public void deleteFriend(Integer userId, Integer otherUserId) throws NotFoundException {
-        HashMap<Integer, User> users;
-        users = inMemoryUserStorage.getMap();
-        if(users.get(userId) == null) {
-            log.error("Отсутствует указанный UserId в UserService, deleteFriend()");
-            throw new NotFoundException("Отсутствует указанный UserId");
-        }
-        User user = users.get(userId);
-        user.deleteFriend(otherUserId);
-        if(users.get(otherUserId) == null) {
-            log.error("Отсутствует указанный otherUserId в UserService, deleteFriend()");
-            throw new NotFoundException("Отсутствует указанный otherUserId");
-        }
-        User userFriend = users.get(otherUserId);
-        userFriend.deleteFriend(userId);
-        log.info("Метод отработал положительно в UserService, deleteFriend()");
-    }
+//    public User addFriend(Integer userId, Integer otherUserId) throws NotFoundException {
+//        if(userId < 0 || otherUserId < 0){
+//            log.error("Передан отрицательный UserId в UserService, addFriend()");
+//            throw new NotFoundException("Отрицательный UserId");
+//        }
+//        HashMap<Integer, User> users;
+//        users = inMemoryUserStorage.getMap();
+//        if(users.get(userId) == null) {
+//            log.error("Отсутствует указанный UserId в UserService, addFriend()");
+//            throw new NotFoundException("Отсутствует указанный UserId");
+//        }
+//        if(users.get(otherUserId) == null) {
+//            log.error("Отсутствует указанный otherUserId в UserService, addFriend()");
+//            throw new NotFoundException("Отсутствует указанный otherUserId");
+//        }
+//        User user = users.get(userId);
+//        User userFriend = users.get(otherUserId);
+//        user.setFriends(otherUserId);
+//        userFriend.setFriends(userId);
+//        log.info("Метод отработал положительно в UserService, addFriend()");
+//        return user;
+//    }
+//
+//    public void deleteFriend(Integer userId, Integer otherUserId) throws NotFoundException {
+//        HashMap<Integer, User> users;
+//        users = inMemoryUserStorage.getMap();
+//        if(users.get(userId) == null) {
+//            log.error("Отсутствует указанный UserId в UserService, deleteFriend()");
+//            throw new NotFoundException("Отсутствует указанный UserId");
+//        }
+//        User user = users.get(userId);
+//        user.deleteFriend(otherUserId);
+//        if(users.get(otherUserId) == null) {
+//            log.error("Отсутствует указанный otherUserId в UserService, deleteFriend()");
+//            throw new NotFoundException("Отсутствует указанный otherUserId");
+//        }
+//        User userFriend = users.get(otherUserId);
+//        userFriend.deleteFriend(userId);
+//        log.info("Метод отработал положительно в UserService, deleteFriend()");
+//    }
 
     public List<User> returnsFriend(Integer id) throws NotFoundException {
         HashMap<Integer, User> users = inMemoryUserStorage.getMap();
