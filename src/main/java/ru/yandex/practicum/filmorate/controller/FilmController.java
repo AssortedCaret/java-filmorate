@@ -16,7 +16,7 @@ import java.util.List;
 public class FilmController {
     private final FilmStorageDaoImplService filmStorageDaoImplService;
     @Autowired
-    public FilmController(FilmStorageDaoImplService filmStorageDaoImplService){
+    public FilmController(FilmStorageDaoImplService filmStorageDaoImplService) {
         this.filmStorageDaoImplService = filmStorageDaoImplService;
     }
 

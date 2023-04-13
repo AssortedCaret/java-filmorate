@@ -28,7 +28,6 @@ public class FilmService {
         HashMap<Integer, Film> films;
         films = inMemoryFilmStorage.getMap();
         Film film = films.get(filmId);
-        //film.setLikes(userId);
         log.info("Метод отработал положительно в FilmService, addLike()");
         return film;
     }
@@ -47,10 +46,9 @@ public class FilmService {
         return film;
     }
 
-    public List<Film> returnPopularFilm( Integer count){
-
+    public List<Film> returnPopularFilm(Integer count) {
         popularFilm.addAll(inMemoryFilmStorage.getMap().values());
-        if(!(count == null))
+        if (!(count == null))
             return popularFilm.stream().limit(count).collect(Collectors.toList());
         else
             return popularFilm.stream().collect(Collectors.toList());

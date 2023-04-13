@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.yandex.practicum.filmorate.Dao.UserStorageDaoImpl;
 import ru.yandex.practicum.filmorate.Dao.service.UserStorageDaoImplService;
 import ru.yandex.practicum.filmorate.exception.ErrorResponse;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
@@ -9,9 +8,6 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.User;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.service.UserService;
-import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -23,7 +19,7 @@ public class UserController {
     private final UserStorageDaoImplService userStorageDaoImplService;
 
     @Autowired
-    UserController(UserStorageDaoImplService userStorageDaoImplService){
+    UserController(UserStorageDaoImplService userStorageDaoImplService) {
         this.userStorageDaoImplService = userStorageDaoImplService;
     }
 
@@ -39,7 +35,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
     public Set<User> returnSameFriend(@Valid @PathVariable("id") Integer id, @PathVariable("otherId")Integer otherId)
-            throws ClassNotFoundException{
+            throws ClassNotFoundException {
         return userStorageDaoImplService.returnSameFriend(id, otherId);
     }
 
@@ -54,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping
-    public Optional<User> updateUser(@Valid @RequestBody User user) throws ValidationException, NotFoundException, ErrorResponse {
+    public Optional<User> updateUser(@Valid @RequestBody User user) throws ValidationException, NotFoundException {
         return userStorageDaoImplService.updateUser(user);
     }
 

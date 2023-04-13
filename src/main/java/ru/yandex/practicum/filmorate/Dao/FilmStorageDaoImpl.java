@@ -33,7 +33,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
     private final JdbcTemplate jdbcTemplate;
     private final MpaStorageDaoImpl mpaStorageDao;
 
-    public FilmStorageDaoImpl(JdbcTemplate jdbcTemplate, GenreStorageDaoImpl genreStorage, MpaStorageDaoImpl mpa){
+    public FilmStorageDaoImpl(JdbcTemplate jdbcTemplate, GenreStorageDaoImpl genreStorage, MpaStorageDaoImpl mpa) {
         this.jdbcTemplate = jdbcTemplate;
         this.genreStorage = genreStorage;
         this.mpaStorageDao = mpa;
@@ -67,7 +67,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film update(@Valid Film film) throws ValidationException, SQLException {
-        if(listIdFilms.size() < film.getId()){
+        if (listIdFilms.size() < film.getId()){
             log.error("Передан неверный id. Фильм не обновлен");
             throw new NotFoundException("Не выполнены условия обновления фильма. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -102,7 +102,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
         String request = "delete from film where film_id=?";
         List<Film> films = getAll();
         Film searchingFilm = null;
-        for(Film film : films) {
+        for (Film film : films) {
             if (film.getId() == id)
                searchingFilm = film;
         }
@@ -116,7 +116,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
     public List<Film> getAll() {
         String sql = "select * from film";
         List<Film> films = jdbcTemplate.query(sql, (rs, rowNum) -> makeFilm(rs));
-        for(Film film : films) {
+        for (Film film : films) {
             if (film.getGenres() != null) {
                 for (Genre genre : film.getGenres()) {
                     String requestG = "insert into film_genre (film_id, genre_id) values (?,?)";
@@ -135,7 +135,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film get(int id) {
-        if(listIdFilms.size() < id){
+        if (listIdFilms.size() < id){
             log.error("Передан неверный id. Фильм не обновлен");
             throw new NotFoundException("Не выполнены условия обновления фильма. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -150,7 +150,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film filmAddLike(Integer filmId, Integer userId) {
-        if(filmId <= 0 || userId <= 0){
+        if (filmId <= 0 || userId <= 0){
             log.error("Передан неверный id. Лайк не добавлен");
             throw new NotFoundException("Не выполнены условия добавления лайка. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -169,7 +169,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film filmDeleteLike(Integer filmId, Integer userId) {
-        if(filmId <= 0 || userId <= 0){
+        if (filmId <= 0 || userId <= 0){
             log.error("Передан неверный id. Лайк не добавлен");
             throw new NotFoundException("Не выполнены условия добавления лайка. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -182,7 +182,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
     }
 
     @Override
-    public List <Film> getPopularFilm(Integer count){
+    public List<Film> getPopularFilm(Integer count) {
         String sql = "select f.*, " +
                 "count(fl.film_id) " +
                 "from film as f " +
@@ -197,7 +197,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
         }
         log.info("Получен список популярных фильмов: {}", count);
         List<Film> checkFilm = new ArrayList<>();
-        if(count == 1){
+        if (count == 1){
             checkFilm.add(films.get(0));
             return checkFilm;
         } else
@@ -234,17 +234,17 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
         }
         String description = film.getDescription();
         char[] c_arr = description.toCharArray();
-        if(c_arr.length > 200){
+        if (c_arr.length > 200){
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
         }
-        if(film.getName() == ""){
+        if (film.getName() == ""){
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
         }
-        if(film.getDuration() <= 0){
+        if (film.getDuration() <= 0){
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");

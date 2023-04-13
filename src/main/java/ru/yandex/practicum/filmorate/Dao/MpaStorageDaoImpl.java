@@ -37,7 +37,7 @@ public class MpaStorageDaoImpl implements MpaStorageDao {
         String sql = "select * from mpa";
         List<Mpa> mpa = jdbcTemplate.query(sql, (rs, rowNum) -> makeMpa(rs));
         log.info("Получен список рейтингов");
-        if(mpa.isEmpty())
+        if (mpa.isEmpty())
             log.info("Список рейтингов пуст");
         return mpa;
     }
@@ -46,11 +46,11 @@ public class MpaStorageDaoImpl implements MpaStorageDao {
     public Mpa getMpaId(int id) {
         SqlRowSet mpaRows = jdbcTemplate.queryForRowSet("select * from mpa where id = ?", id);
         Mpa mpa;
-        if(mpaRows.next()) {
+        if (mpaRows.next()) {
             mpa = new Mpa(
                     mpaRows.getInt("id"),
                     mpaRows.getString("name"));
-            if(mpa.getId() == id){
+            if (mpa.getId() == id) {
                 log.info("Найден рейтинг: {} {}", mpa.getId(), mpa.getName());
             }
         } else {

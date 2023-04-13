@@ -19,7 +19,7 @@ import java.util.List;
 public class MpaController {
     private final MpaStorageDaoImplService mpaStorageDaoImplService;
 
-    MpaController(MpaStorageDaoImplService mpaStorageDaoImplService){
+    MpaController(MpaStorageDaoImplService mpaStorageDaoImplService) {
         this.mpaStorageDaoImplService = mpaStorageDaoImplService;
     }
 

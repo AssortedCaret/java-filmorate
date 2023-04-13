@@ -25,7 +25,7 @@ public class GenreStorageDaoImpl implements GenreStorageDao {
     }
 
     @Override
-    public List<Genre> getAllGenre(){
+    public List<Genre> getAllGenre() {
         /**
          * 3-й способ
          */
@@ -38,18 +38,18 @@ public class GenreStorageDaoImpl implements GenreStorageDao {
     }
 
     @Override
-    public Genre getGenreId(int id){
-        if(id > 6) {
+    public Genre getGenreId(int id) {
+        if (id > 6) {
             log.error("Передан неверный genreId.");
             throw new NotFoundException("Такого id не существует.");
         }
         SqlRowSet genreRows = jdbcTemplate.queryForRowSet("select * from genres where id = ?", id);
         Genre genre;
-        if(genreRows.next()) {
+        if (genreRows.next()) {
              genre = new Genre(
                     genreRows.getInt("id"),
                     genreRows.getString("name"));
-            if(genre.getId() == id){
+            if (genre.getId() == id) {
                 log.info("Найден жанр: {} {}", genre.getId(), genre.getName());
                 return genre;
             }
@@ -61,7 +61,7 @@ public class GenreStorageDaoImpl implements GenreStorageDao {
     }
 
     @Override
-    public List<Genre> getGenreFilmId(int id){
+    public List<Genre> getGenreFilmId(int id) {
         String str = "select * from genres where id in (select genre_id from film_genre where film_id = ?)";
         List<Genre> genres = jdbcTemplate.query(str, (rs, rowNum) -> makeGenre(rs), id);
         if (genres.isEmpty()) {

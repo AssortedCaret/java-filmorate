@@ -24,7 +24,7 @@ public class UserDaoTest {
     User newUser = new User(1, "user2@user.ru", "NewUserattor", "NewUser",
             LocalDate.of(1990, 04, 04));
     @Test
-    public void testFindUserById() throws ValidationException {
+    public void testFindUserById() {
         assertEquals(newUser, userStorage.getUserId(1));
     }
 
@@ -42,5 +42,4 @@ public class UserDaoTest {
         List<User> users = userStorage.getUsers();
         assertEquals(1, users.size());
     }
-
 }

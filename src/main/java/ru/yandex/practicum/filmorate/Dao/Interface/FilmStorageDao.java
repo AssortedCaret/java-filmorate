@@ -15,7 +15,7 @@ public interface FilmStorageDao {
     public Film delete(Integer id);
     public List<Film> getAll();
     public Film get(int id);
-    public List <Film> getPopularFilm(Integer quantity);
+    public List<Film> getPopularFilm(Integer quantity);
     public Film filmAddLike(Integer filmId, Integer userId);
     public Film filmDeleteLike(Integer filmId, Integer userId);
 }

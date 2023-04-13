@@ -21,7 +21,7 @@ public class MpaStorageDaoImplService {
     }
 
     public Mpa getMpaId(int id) throws ValidationException {
-        if(id > 5){
+        if (id > 5) {
             throw new NotFoundException("Такого id MPA не существует");
         }
         return mpaStorageDao.getMpaId(id);
