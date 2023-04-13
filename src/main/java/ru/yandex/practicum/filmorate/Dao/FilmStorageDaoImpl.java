@@ -67,7 +67,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film update(@Valid Film film) throws ValidationException, SQLException {
-        if (listIdFilms.size() < film.getId()){
+        if (listIdFilms.size() < film.getId()) {
             log.error("Передан неверный id. Фильм не обновлен");
             throw new NotFoundException("Не выполнены условия обновления фильма. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -88,7 +88,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
                 String requestG = "insert into film_genre (film_id, genre_id) values (?,?)";
                 try {
                     jdbcTemplate.update(requestG, film.getId(), genre.getId());
-                } catch (DuplicateKeyException r){
+                } catch (DuplicateKeyException r) {
                     log.error("Данный жанр уже добавлен");
                 }
             }
@@ -135,7 +135,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film get(int id) {
-        if (listIdFilms.size() < id){
+        if (listIdFilms.size() < id) {
             log.error("Передан неверный id. Фильм не обновлен");
             throw new NotFoundException("Не выполнены условия обновления фильма. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -150,7 +150,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film filmAddLike(Integer filmId, Integer userId) {
-        if (filmId <= 0 || userId <= 0){
+        if (filmId <= 0 || userId <= 0) {
             log.error("Передан неверный id. Лайк не добавлен");
             throw new NotFoundException("Не выполнены условия добавления лайка. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -169,7 +169,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     @Override
     public Film filmDeleteLike(Integer filmId, Integer userId) {
-        if (filmId <= 0 || userId <= 0){
+        if (filmId <= 0 || userId <= 0) {
             log.error("Передан неверный id. Лайк не добавлен");
             throw new NotFoundException("Не выполнены условия добавления лайка. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -197,7 +197,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
         }
         log.info("Получен список популярных фильмов: {}", count);
         List<Film> checkFilm = new ArrayList<>();
-        if (count == 1){
+        if (count == 1) {
             checkFilm.add(films.get(0));
             return checkFilm;
         } else
@@ -227,24 +227,24 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
     }
 
     private void validateFilm(@Valid Film film) throws ValidationException {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))) {
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
         }
         String description = film.getDescription();
-        char[] c_arr = description.toCharArray();
-        if (c_arr.length > 200){
+        char[] carr = description.toCharArray();
+        if (carr.length > 200) {
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
         }
-        if (film.getName() == ""){
+        if (film.getName() == "") {
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
         }
-        if (film.getDuration() <= 0){
+        if (film.getDuration() <= 0) {
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
                     "правильности ввода данных.");
