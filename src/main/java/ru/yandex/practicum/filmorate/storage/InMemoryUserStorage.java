@@ -7,13 +7,12 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 @Component
 @Slf4j
-public class InMemoryUserStorage implements UserStorage{
+public class InMemoryUserStorage implements UserStorage {
 
     private HashMap<Integer, User> users = new HashMap<>();
     private int id = 1;
