@@ -20,6 +20,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
     int id = 1;
     ArrayList<Integer> listIdUsers = new ArrayList<>();
     private final JdbcTemplate jdbcTemplate;
+
     UserStorageDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -110,7 +111,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
 
     @Override
     public Integer addFriend(Integer userId, Integer friendId) {
-        if(userId <= 0 || friendId <= 0){
+        if (userId <= 0 || friendId <= 0) {
             log.error("Передан неверный id. Юзер не найден");
             throw new NotFoundException("Не выполнены условия получения юзера. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -130,7 +131,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
 
     private int putIdUser(User user) {
         user.setId(id);
-        id = id+1;
+        id = id + 1;
         return id;
     }
 
@@ -148,11 +149,11 @@ public class UserStorageDaoImpl implements UserStorageDao {
 
     private void validateUser(User user) throws ValidationException {
         if (!((user.getEmail().length() > 0) && user.getEmail().contains("@") && !(user.getLogin().contains(" ")) &&
-                (user.getLogin().length() > 0))){
+                (user.getLogin().length() > 0))) {
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя.");
         }
-        if(user.getName() == null || user.getName().isBlank()) {
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
     }
