@@ -13,7 +13,7 @@ import java.util.List;
 public class FilmStorageDaoImplService {
 
     private final FilmStorageDaoImpl filmStorageDao;
-    
+
     @Autowired
     public FilmStorageDaoImplService(FilmStorageDaoImpl filmStorageDao) {
         this.filmStorageDao = filmStorageDao;
