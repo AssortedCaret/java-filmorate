@@ -17,11 +17,11 @@ public class UserStorageDaoImplService {
     private final UserStorageDaoImpl userStorageDao;
 
     @Autowired
-    UserStorageDaoImplService(UserStorageDaoImpl userStorageDao){
+    UserStorageDaoImplService(UserStorageDaoImpl userStorageDao) {
         this.userStorageDao = userStorageDao;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return userStorageDao.getUsers();
     }
 
@@ -30,7 +30,7 @@ public class UserStorageDaoImplService {
     }
 
     public Set<User> returnSameFriend(Integer id, Integer otherId)
-            throws ClassNotFoundException{
+            throws ClassNotFoundException {
         return userStorageDao.getCommonFriends(id, otherId);
     }
 

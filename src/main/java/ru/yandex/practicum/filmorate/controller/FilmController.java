@@ -31,7 +31,7 @@ public class FilmController {
     }
 
     @GetMapping
-    public List<Film> getFilms(){
+    public List<Film> getFilms() {
         return filmStorageDaoImplService.getFilms();
     }
 

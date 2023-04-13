@@ -18,7 +18,7 @@ public class MpaStorageDaoImpl implements MpaStorageDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public MpaStorageDaoImpl(JdbcTemplate jdbcTemplate){
+    public MpaStorageDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

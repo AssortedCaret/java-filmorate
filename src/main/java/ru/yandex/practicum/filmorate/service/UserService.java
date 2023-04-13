@@ -18,7 +18,7 @@ import java.util.Map;
 public class UserService {
     private final UserStorage inMemoryUserStorage;
     @Autowired
-    public UserService(InMemoryUserStorage inMemoryUserStorage){
+    public UserService(InMemoryUserStorage inMemoryUserStorage) {
         this.inMemoryUserStorage = inMemoryUserStorage;
     }
 
@@ -71,5 +71,4 @@ public class UserService {
         }
         return users.get(userId);
     }
-
 }

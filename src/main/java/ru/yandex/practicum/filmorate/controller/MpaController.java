@@ -31,7 +31,7 @@ public class MpaController {
 
     @GetMapping("/{id}")
     public Mpa getMpaById(@PathVariable int id) throws ValidationException {
-        if(id > 5){
+        if (id > 5) {
             log.error("Не выполнены условия обновления фильма. Фильм не обновлен");
             throw new NotFoundException("Такого id MPA не существует");
         }

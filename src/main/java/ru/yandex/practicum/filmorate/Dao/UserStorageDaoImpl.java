@@ -20,7 +20,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
     int id = 1;
     ArrayList<Integer> listIdUsers = new ArrayList<>();
     private final JdbcTemplate jdbcTemplate;
-    UserStorageDaoImpl(JdbcTemplate jdbcTemplate){
+    UserStorageDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -43,7 +43,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
     @Override
     public Optional<User> updateUser(User user) throws ValidationException {
         String sql = "update users set email = ?, login = ?, name = ?,birthday = ? where id = ?";
-        if(listIdUsers.size() < user.getId()){
+        if (listIdUsers.size() < user.getId()) {
             log.error("Передан неверный id. Юзер не обновлен");
             throw new NotFoundException("Не выполнены условия обновления юзера. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -64,7 +64,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
         String sql = "select * from users";
         List<User> users = jdbcTemplate.query(sql, (rs, rowNum) -> makeUser(rs));
         log.info("Получены все Users: {}", users);
-        if(users.isEmpty())
+        if (users.isEmpty())
             log.error("Список User пуст");
         return users;
     }
@@ -72,7 +72,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
     @Override
     public User getUserId(Integer id) {
         String str = "select * from users where id = ?";
-        if(listIdUsers.size() < id){
+        if (listIdUsers.size() < id) {
             log.error("Передан неверный id. Юзер не найден");
             throw new NotFoundException("Не выполнены условия получения юзера. /n Убедитесь в правильности ввода" +
                     "данных.");
@@ -128,7 +128,7 @@ public class UserStorageDaoImpl implements UserStorageDao {
                 friendId);
     }
 
-    private int putIdUser(User user){
+    private int putIdUser(User user) {
         user.setId(id);
         id = id+1;
         return id;

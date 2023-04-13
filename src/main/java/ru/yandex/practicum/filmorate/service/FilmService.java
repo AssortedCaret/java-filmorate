@@ -35,7 +35,7 @@ public class FilmService {
     public Film deleteLike(Integer filmId, Integer userId) throws ValidationException {
         HashMap<Integer, Film> films;
         films = inMemoryFilmStorage.getMap();
-        if(filmId < 0 || userId < 0) {
+        if (filmId < 0 || userId < 0) {
             log.error("Отсутствует указанный UserId в UserService, addFriend()");
             throw new NotFoundException("Film id < 0");
         }

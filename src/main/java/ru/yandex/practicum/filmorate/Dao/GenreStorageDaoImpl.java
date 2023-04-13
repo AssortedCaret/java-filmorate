@@ -20,7 +20,7 @@ public class GenreStorageDaoImpl implements GenreStorageDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public GenreStorageDaoImpl(JdbcTemplate jdbcTemplate){
+    public GenreStorageDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -32,7 +32,7 @@ public class GenreStorageDaoImpl implements GenreStorageDao {
         String sql = "select * from genres";
         List<Genre> genres = jdbcTemplate.query(sql, (rs, rowNum) -> makeGenre(rs));
         log.info("Получены все жанры");
-        if(genres.isEmpty())
+        if (genres.isEmpty())
             log.error("Список жанров пуст");
         return genres;
     }

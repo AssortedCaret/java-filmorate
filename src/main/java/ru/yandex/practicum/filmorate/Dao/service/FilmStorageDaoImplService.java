@@ -14,7 +14,7 @@ public class FilmStorageDaoImplService {
 
     private final FilmStorageDaoImpl filmStorageDao;
     @Autowired
-    public FilmStorageDaoImplService(FilmStorageDaoImpl filmStorageDao){
+    public FilmStorageDaoImplService(FilmStorageDaoImpl filmStorageDao) {
         this.filmStorageDao = filmStorageDao;
     }
 
@@ -26,7 +26,7 @@ public class FilmStorageDaoImplService {
         return filmStorageDao.get(id);
     }
 
-    public List<Film> getFilms(){
+    public List<Film> getFilms() {
         return filmStorageDao.getAll();
     }
 

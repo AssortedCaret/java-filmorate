@@ -12,7 +12,7 @@ import java.util.List;
 public class MpaStorageDaoImplService {
     private final MpaStorageDaoImpl mpaStorageDao;
 
-    MpaStorageDaoImplService(MpaStorageDaoImpl mpaStorageDao){
+    MpaStorageDaoImplService(MpaStorageDaoImpl mpaStorageDao) {
         this.mpaStorageDao = mpaStorageDao;
     }
 

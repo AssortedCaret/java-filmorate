@@ -41,7 +41,7 @@ public class Film {
         this.mpa = mpa;
     }
 
-    public void deleteLike(Integer id){
+    public void deleteLike(Integer id) {
         likes.remove(id);
     }
 }
