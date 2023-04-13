@@ -83,11 +83,11 @@ public class InMemoryFilmStorage implements FilmStorage{
     }
 
     private void validateFilm(@Valid Film film) throws ValidationException {
-//        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
-//            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
-//            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
-//                    "правильности ввода данных.");
-//        }
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
+            log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
+            throw new ValidationException("Не выполнены условия добавления пользователя. /n Убедитесь в " +
+                    "правильности ввода данных.");
+        }
         String description = film.getDescription();
         char[] c_arr = description.toCharArray();
         if(c_arr.length > 200){

@@ -77,8 +77,8 @@ public class InMemoryUserStorage implements UserStorage{
     }
 
     private void validateUser(@Valid User user) throws ValidationException {
-        if (!((user.getEmail().length() > 0) && user.getEmail().contains("@") && !(user.getLogin().contains(" ")) &&
-                (user.getLogin().length() > 0))){
+        if (!(user.getEmail().length() > 0 && user.getEmail().contains("@") && !(user.getLogin().contains(" ")) &&
+                user.getLogin().length() > 0 && user.getBirthday().isBefore(LocalDate.now()))){
             log.error("Не выполнены условия добавления пользователя. Пользователь не добавлен");
             throw new ValidationException("Не выполнены условия добавления пользователя.");
         }

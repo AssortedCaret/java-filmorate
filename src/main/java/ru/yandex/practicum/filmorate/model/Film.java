@@ -1,22 +1,14 @@
 package ru.yandex.practicum.filmorate.model;
 
 import javax.validation.constraints.*;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Film {
-    @Id
     private Integer id;
     @NotBlank(message = "Название фильма не должно быть пустым")
     private String name;
@@ -25,23 +17,30 @@ public class Film {
     private LocalDate releaseDate;
     @Positive
     private long duration;
-    private List<Genre> genres;
-    private Mpa mpa;
-    private final Set<Integer> likes = new HashSet<>();
+    private Set<Integer> likes = new HashSet<>();
 
-    public Film(Integer id, String name, LocalDate date,
-                String description, long duration,
-                List<Genre> genres, Mpa mpa){
+    public Film(Integer id, String name, String description, LocalDate date, long duration, Set<Integer> likes){
         this.id = id;
         this.name = name;
         this.description = description;
         this.releaseDate = date;
         this.duration = duration;
-        this.genres = genres;
-        this.mpa = mpa;
+        this.likes = getLikes();
     }
 
-    public void deleteLike(Integer id) {
+    public Set<Integer> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Integer like) {
+        likes.add(like);
+    }
+
+    public void deleteLike(Integer id){
         likes.remove(id);
+    }
+    private Integer putIdFilm(){
+        id =+ 1;
+        return id;
     }
 }

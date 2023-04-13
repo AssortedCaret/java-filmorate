@@ -5,12 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.*;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class User {
     private  Integer id;
     @NotBlank(message = "Email не должен быть пустым")
@@ -21,6 +18,25 @@ public class User {
     private  String login;
     private  String name;
     @Past
-    private LocalDate birthday;
-    private final Set<Integer> friends = new HashSet<>();
+    private  LocalDate birthday;
+    private Set<Integer> friends = new HashSet<>();
+
+  public User(Integer id, String email, String login, String name, LocalDate date){
+        this.id = id;
+        this.email = email;
+        this.login = login;
+        this.birthday = date;
+        this.name = name;
+    }
+    public Set<Integer> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Integer user) {
+        friends.add(user);
+    }
+
+    public void deleteFriend(Integer id){
+      friends.remove(id);
+    }
 }
