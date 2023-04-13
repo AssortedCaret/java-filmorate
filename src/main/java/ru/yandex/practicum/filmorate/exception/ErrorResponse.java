@@ -1,7 +1,5 @@
 package ru.yandex.practicum.filmorate.exception;
 
-import org.springframework.http.HttpStatus;
-
 public class ErrorResponse extends Throwable {
     String error;
     String description;
