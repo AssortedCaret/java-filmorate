@@ -1,69 +1,78 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.yandex.practicum.filmorate.Dao.service.UserStorageDaoImplService;
 import ru.yandex.practicum.filmorate.exception.ErrorResponse;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.model.User;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
-    private final UserStorageDaoImplService userStorageDaoImplService;
+    private final UserStorage inMemoryUserStorage;
+    private final UserService userService;
 
     @Autowired
-    UserController(UserStorageDaoImplService userStorageDaoImplService) {
-        this.userStorageDaoImplService = userStorageDaoImplService;
+    UserController(InMemoryUserStorage inMemoryUserStorage, UserService userService){
+        this.inMemoryUserStorage = inMemoryUserStorage;
+        this.userService = userService;
     }
 
     @GetMapping
-    public List<User> getUsers() {
-        return userStorageDaoImplService.getUsers();
+    public ArrayList<User> getUsers(){
+        return inMemoryUserStorage.getAll();
     }
 
     @GetMapping(value = "/{id}/friends")
-    public Collection<User> userFindAllFriends(@Valid @PathVariable("id") Integer id) throws NotFoundException {
-        return userStorageDaoImplService.userFindAllFriends(id);
+    public List<User> userFindAllFriends(@PathVariable("id") Integer id) throws NotFoundException {
+        return userService.returnsFriend(id);
     }
 
     @GetMapping(value = "/{id}/friends/common/{otherId}")
-    public Set<User> returnSameFriend(@Valid @PathVariable("id") Integer id, @PathVariable("otherId")Integer otherId)
-            throws ClassNotFoundException {
-        return userStorageDaoImplService.returnSameFriend(id, otherId);
+    public List<User> returnSameFriend(@PathVariable("id") Integer id, @PathVariable("otherId")Integer otherId)
+            throws ClassNotFoundException{
+        return userService.returnSameFriend(id, otherId);
     }
 
     @GetMapping(value = "/{id}")
-    public User userFindById(@Valid @PathVariable ("id") Integer id) throws NotFoundException {
-        return userStorageDaoImplService.userFindById(id);
+    public User userFindById(@PathVariable ("id") Integer id) throws NotFoundException {
+        return userService.getUser(id);
     }
 
     @PostMapping
-    public User addUser(@Valid @RequestBody User user) throws ValidationException, CloneNotSupportedException {
-        return userStorageDaoImplService.addUser(user);
+    public User addUser(@RequestBody User user) throws ValidationException, CloneNotSupportedException {
+        return inMemoryUserStorage.add(user);
     }
 
     @PutMapping
-    public Optional<User> updateUser(@Valid @RequestBody User user) throws ValidationException, NotFoundException {
-        return userStorageDaoImplService.updateUser(user);
+    public User updateUser(@RequestBody User user) throws ValidationException, NotFoundException, ErrorResponse {
+        return inMemoryUserStorage.update(user);
     }
 
     @PutMapping(value = "/{id}/friends/{friendId}")
-    public Integer userAddFriend(@Valid @PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId)
+    public User userAddFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId)
             throws NotFoundException {
         log.info("Метод отработал положительно в UserController, addFriend()");
-        return userStorageDaoImplService.userAddFriend(id, friendId);
+        return userService.addFriend(id, friendId);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public User deleteFilmById(@PathVariable("id") Integer id) {
+        return inMemoryUserStorage.delete(id);
     }
 
     @DeleteMapping(value = "/{id}/friends/{friendId}")
-    public void deleteFriend(@Valid @PathVariable("id") Integer id, @PathVariable("friendId")Integer friendId)
+    public void userDeleteFriend(@PathVariable("id") Integer id, @PathVariable("friendId")Integer friendId)
             throws NotFoundException {
-        userStorageDaoImplService.deleteFriend(id, friendId);
+        userService.deleteFriend(id, friendId);
     }
 }
