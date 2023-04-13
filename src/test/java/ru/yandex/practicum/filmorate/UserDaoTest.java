@@ -23,6 +23,7 @@ public class UserDaoTest {
             LocalDate.of(1990, 04, 04));
     User newUser = new User(1, "user2@user.ru", "NewUserattor", "NewUser",
             LocalDate.of(1990, 04, 04));
+    
     @Test
     public void testFindUserById() {
         assertEquals(newUser, userStorage.getUserId(1));

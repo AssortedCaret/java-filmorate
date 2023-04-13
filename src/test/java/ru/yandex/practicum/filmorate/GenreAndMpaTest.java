@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GenreAndMpaTest {
     private final GenreStorageDaoImpl genreStorageDaoImpl;
     private final MpaStorageDaoImpl mpaStorageDaoImpl;
+
     @Test
     public void testGetGenre() {
         assertEquals(6, genreStorageDaoImpl.getAllGenre().size());
