@@ -6,7 +6,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface FilmStorage extends Storage<Film>{
+public interface FilmStorage extends Storage<Film> {
 
     public Film add(Film film) throws ValidationException, CloneNotSupportedException;
 
