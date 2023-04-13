@@ -28,7 +28,7 @@ public class FilmService {
         HashMap<Integer, Film> films;
         films = inMemoryFilmStorage.getMap();
         Film film = films.get(filmId);
-        film.setLikes(userId);
+        //film.setLikes(userId);
         log.info("Метод отработал положительно в FilmService, addLike()");
         return film;
     }
