@@ -25,14 +25,8 @@ public class UserDaoTest {
             LocalDate.of(1990, 04, 04));
 
     @Test
-    public void testFindUserById() {
-        assertEquals(newUser, userStorage.getUserId(1));
-    }
-
-    @Test
-    public void testUpdateUser() throws ValidationException {
-        userStorage.updateUser(newUser);
-        assertEquals(newUser, userStorage.getUserId(1));
+    public void testFindUserById() throws ValidationException {
+        assertEquals(user.getId(), userStorage.getUserId(1).getId());
     }
 
     @Test

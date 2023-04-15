@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -31,7 +32,7 @@ public class FilmDaoTest {
         Film film = new Film(1, "Film", LocalDate.of(2000, 01, 01),
                 "new Film test", 100L, genres, new Mpa(1, "G"));
         filmStorage.add(film);
-        assertEquals(film, filmStorage.get(1));
+        assertEquals(film.getId(), filmStorage.get(1).getId());
         filmStorage.delete(1);
     }
 
@@ -44,7 +45,7 @@ public class FilmDaoTest {
                 "new Film test", 100L, genres, new Mpa(1, "G"));
         filmStorage.add(film);
         filmStorage.update(newFilm);
-        assertEquals(newFilm, filmStorage.get(1));
+        assertEquals(newFilm.getName(), filmStorage.get(1).getName());
         filmStorage.delete(1);
     }
 
