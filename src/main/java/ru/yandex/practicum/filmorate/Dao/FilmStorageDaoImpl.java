@@ -28,7 +28,7 @@ public class FilmStorageDaoImpl implements FilmStorageDao {
 
     private final Logger log = LoggerFactory.getLogger(FilmStorageDaoImpl.class);
     private Integer id = 0;
-    ArrayList<Integer> listIdFilms = new ArrayList<>();
+    private final ArrayList<Integer> listIdFilms = new ArrayList<>();
     private final GenreStorageDaoImpl genreStorage;
     private final JdbcTemplate jdbcTemplate;
     private final MpaStorageDaoImpl mpaStorageDao;

@@ -18,10 +18,10 @@ import java.util.*;
 public class UserStorageDaoImpl implements UserStorageDao {
     private final Logger log = LoggerFactory.getLogger(FilmStorageDaoImpl.class);
     int id = 1;
-    ArrayList<Integer> listIdUsers = new ArrayList<>();
+    private final ArrayList<Integer> listIdUsers = new ArrayList<>();
     private final JdbcTemplate jdbcTemplate;
 
-    UserStorageDaoImpl(JdbcTemplate jdbcTemplate) {
+    public UserStorageDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

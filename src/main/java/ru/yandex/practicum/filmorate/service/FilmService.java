@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Service
 public class FilmService {
     private final FilmStorage inMemoryFilmStorage;
-    Comparator<Film> comparator = new NewComparator();
-    Set<Film> popularFilm = new TreeSet<>(comparator);
+    private final Comparator<Film> comparator = new NewComparator();
+    private final Set<Film> popularFilm = new TreeSet<>(comparator);
 
     @Autowired
     public FilmService(InMemoryFilmStorage inMemoryFilmStorage) {
