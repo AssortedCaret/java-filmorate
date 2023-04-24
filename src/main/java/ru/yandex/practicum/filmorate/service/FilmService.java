@@ -17,8 +17,9 @@ import java.util.stream.Collectors;
 @Service
 public class FilmService {
     private final FilmStorage inMemoryFilmStorage;
-    Comparator<Film> comparator = new NewComparator();
-    Set<Film> popularFilm = new TreeSet<>(comparator);
+    private final Comparator<Film> comparator = new NewComparator();
+    private final Set<Film> popularFilm = new TreeSet<>(comparator);
+
     @Autowired
     public FilmService(InMemoryFilmStorage inMemoryFilmStorage) {
         this.inMemoryFilmStorage = inMemoryFilmStorage;
@@ -28,7 +29,6 @@ public class FilmService {
         HashMap<Integer, Film> films;
         films = inMemoryFilmStorage.getMap();
         Film film = films.get(filmId);
-        film.setLikes(userId);
         log.info("Метод отработал положительно в FilmService, addLike()");
         return film;
     }
@@ -36,7 +36,7 @@ public class FilmService {
     public Film deleteLike(Integer filmId, Integer userId) throws ValidationException {
         HashMap<Integer, Film> films;
         films = inMemoryFilmStorage.getMap();
-        if(filmId < 0 || userId < 0) {
+        if (filmId < 0 || userId < 0) {
             log.error("Отсутствует указанный UserId в UserService, addFriend()");
             throw new NotFoundException("Film id < 0");
         }
@@ -47,10 +47,9 @@ public class FilmService {
         return film;
     }
 
-    public List<Film> returnPopularFilm( Integer count){
-
+    public List<Film> returnPopularFilm(Integer count) {
         popularFilm.addAll(inMemoryFilmStorage.getMap().values());
-        if(!(count == null))
+        if (!(count == null))
             return popularFilm.stream().limit(count).collect(Collectors.toList());
         else
             return popularFilm.stream().collect(Collectors.toList());
