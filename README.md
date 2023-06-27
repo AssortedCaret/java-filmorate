@@ -3,7 +3,7 @@
 ---
 Приложение в котором хранится информация о фильмах, пользователях, их предпочтениях. Пользователи могут добавлять друзей, ставить оценки фильмам, так же на основе оценок пользователя можно сформировать рекомендации по фильмам. Фильмы помимо названия, описания имеют такие поля как жанр и оценка(сколько человек его порекомендовали). Благодаря этому пользователь может находить фильмы по интересующему его жанру и находить самые высокооценённые фильмы.
 # Стек технологий
-Java, Maven, SpringBoot, PostgreSQL
+Java, Maven, SpringBoot, PostgreSQL  
 ![alt text](https://github.com/AssortedCaret/AssortedCaret/blob/main/Badges/java.svg)
 ![alt text](https://github.com/AssortedCaret/AssortedCaret/blob/main/Badges/spring.svg)
 ![alt text](https://github.com/AssortedCaret/AssortedCaret/blob/main/Badges/Maven.svg)
